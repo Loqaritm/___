@@ -4,19 +4,38 @@
     <style>
     body {
         color: rgb(248, 248, 248);
-        background-color: #000000 }
+        background-color: #000000;
+        width: 100%;
+        height: 100%;
+    }
+    html {
+      width: 100%;
+      height: 100%;
+    }
     </style>
 </head>
 <body>
-    <p style="text-align:center;font-size: 64px;"><br><br><br><br>Part II of present coming soon</p>
-
-
-<!-- Display the countdown timer in an element -->
-<p style="text-align:center;font-size: 64px;" id="countdownElement"></p>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; margin: auto; position: absolute; ">
+      <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;">Part II of present coming soon</p>
+      <!-- Display the countdown timer in an element -->
+      <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;" id="countdownElement">___</p>
+    </div>
+    <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; z-index: 5; position: absolute;">
+      <div style=" width: 50%; opacity: 0.4;" id="rotatingTriangle">
+        <svg viewBox="0 0 100 100">
+          <g transform="scale(1.0)">
+            <path d="M50 10 L15 75 L90 75 Z" stroke="red" stroke-width="5" fill="none" opacity="0.3">
+              <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite"></animateTransform>
+            </path>
+          </g>
+         </svg>
+      </div>
+    </div>
 
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("Dec 29, 2021 16:00:00").getTime();
+var startDate = new Date("Dec 28, 2021 10:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -33,9 +52,14 @@ var x = setInterval(function() {
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
+  var percentDone = (now - startDate) / (countDownDate - startDate)
+  console.log(percentDone)
+
   // Display the result in the element with id="demo"
   document.getElementById("countdownElement").innerHTML = days + "d " + hours + "h "
   + minutes + "m " + seconds + "s ";
+
+  document.getElementById("rotatingTriangle").style.opacity = percentDone
 
   // If the count down is finished, write some text 
   if (distance < 0) {
