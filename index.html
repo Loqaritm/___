@@ -22,10 +22,20 @@
     </div>
     <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; z-index: 5; position: absolute;">
       <div style=" width: 50%; opacity: 0.4;" id="rotatingTriangle">
-        <svg viewBox="0 0 100 100">
+        <svg viewBox="0 0 120 120">
+          <defs>
+            <!-- a transparent glow that takes on the colour of the object it's applied to -->
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+              <feMerge>
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
           <g transform="scale(1.0)">
-            <path d="M50 10 L15 75 L90 75 Z" stroke="red" stroke-width="5" fill="none" opacity="0.3">
-              <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="20s" repeatCount="indefinite"></animateTransform>
+            <path d="M60 20 L25 85 L100 85 Z" stroke="#fe3300" stroke-width="7" fill="none" opacity="0.6" filter="url(#glow)">
+              <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"></animateTransform>
             </path>
           </g>
          </svg>
@@ -35,7 +45,7 @@
 <script>
 // Set the date we're counting down to
 var countDownDate = new Date("Dec 29, 2021 16:00:00").getTime();
-var startDate = new Date("Dec 28, 2021 10:00:00").getTime();
+var startDate = new Date("Dec 28, 2021 18:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
