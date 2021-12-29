@@ -16,12 +16,13 @@
     </style>
 </head>
 <body>
-    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; margin: auto; position: absolute; ">
-      <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;">Part II of present coming soon</p>
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; margin: auto; position: absolute; z-index: 20; ">
+      <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;" id="partText">Part II of present coming soon</p>
+      <p style="text-align: center; font-size: 64px; z-index: 20; position: relative; display: none; margin-bottom: 0%;" id="part3text">Part III of present coming soon c:</p>
       <!-- Display the countdown timer in an element -->
       <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;" id="countdownElement">___</p>
     </div>
-    <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; z-index: 5; position: absolute;">
+    <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; z-index: -10; position: absolute;">
       <div style=" width: 50%; opacity: 0.4;" id="rotatingTriangle">
         <svg viewBox="0 0 120 120">
           <defs>
@@ -49,7 +50,10 @@
 // Set the date we're counting down to
 var countDownDate = new Date("Dec 29, 2021 16:00:00").getTime();
 var startDate = new Date("Dec 28, 2021 18:00:00").getTime();
-var startDate2 = new Date("Dec 29, 2021 13:00:00").getTime();
+
+var countDownDate2 = new Date("Dec 29, 2021 20:00:00").getTime();
+var startDate2 = new Date("Dec 29, 2021 16:00:00").getTime();
+var playlistLoaded = false
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -59,30 +63,50 @@ var x = setInterval(function() {
 
   // Find the distance between now and the count down date
   var distance = countDownDate - now;
+  var distance2 = countDownDate2 - now;
+  
+  if (distance > 0) {
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Time calculations for days, hours, minutes and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    document.getElementById("countdownElement").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+  } else if (distance2 > 0) {
+    // Time calculations for days, hours, minutes and seconds
+    var hours = Math.floor((distance2 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance2 % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance2 % (1000 * 60)) / 1000);
+
+    document.getElementById("partText").innerHTML = "Part II is here!"
+    document.getElementById("part3text").style.display = "block"
+    document.getElementById("countdownElement").innerHTML = hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    if (!playlistLoaded) {
+      playlistLoaded = true
+      var node = document.getElementById("partText");
+      node.insertAdjacentHTML("afterend", '<iframe src="https://open.spotify.com/embed/playlist/4USOctbgT9PPTAfQNG2uKs"width="300" height="380" frameborder="0" allowtransparency="true"allow="encrypted-media"></iframe>')
+    }
+  } else {
+    document.getElementById("partText").innerHTML = "<3"
+    document.getElementById("countdownElement").innerHTML = " ";
+    // Break only after both countdowns finish 
+    clearInterval(x);
+  }
+  
 
   var percentDone = (now - startDate) / (countDownDate - startDate)
-  var percentDoneCircles = (now - startDate2) / (countDownDate - startDate2)
-  console.log(percentDoneCircles)
-
-  // Display the result in the element with id="demo"
-  document.getElementById("countdownElement").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
+  var percentDoneCircles = (now - startDate2) / (countDownDate2 - startDate2)
+  
+  percentDone = Math.min(1.0, percentDone)
+  percentDoneCircles = Math.min(1.0, percentDoneCircles)
 
   document.getElementById("rotatingTriangle").style.opacity = percentDone
   document.getElementById("innerCircle").style.opacity = percentDoneCircles
   document.getElementById("outerCircle").style.opacity = percentDoneCircles
-
-  // If the count down is finished, write some text 
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("countdownElement").innerHTML = "EXPIRED";
-  }
 }, 1000);
 </script>
 
