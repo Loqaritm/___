@@ -34,9 +34,11 @@
               </feMerge>
             </filter>
           </defs>
-          <g transform="scale(1.0)">
+          <g>
+            <circle cx="61" cy="62" r="6" stroke="white" stroke-width="4" fill="none" opacity="0" id="innerCircle"/>
+            <circle cx="61" cy="62" r="53" stroke="white" fill="none" opacity="0" id="outerCircle"/>
             <path d="M60 20 L25 85 L100 85 Z" stroke="#fe3300" stroke-width="7" fill="none" opacity="0.6" filter="url(#glow)">
-              <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 60 60" to="360 60 60" dur="20s" repeatCount="indefinite"/animateTransform>
+              <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 61 62" to="360 61 62" dur="20s" repeatCount="indefinite"/>
             </path>
           </g>
          </svg>
@@ -47,6 +49,7 @@
 // Set the date we're counting down to
 var countDownDate = new Date("Dec 29, 2021 16:00:00").getTime();
 var startDate = new Date("Dec 28, 2021 18:00:00").getTime();
+var startDate2 = new Date("Dec 29, 2021 13:00:00").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function() {
@@ -64,13 +67,16 @@ var x = setInterval(function() {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   var percentDone = (now - startDate) / (countDownDate - startDate)
-  console.log(percentDone)
+  var percentDoneCircles = (now - startDate2) / (countDownDate - startDate2)
+  console.log(percentDoneCircles)
 
   // Display the result in the element with id="demo"
   document.getElementById("countdownElement").innerHTML = days + "d " + hours + "h "
   + minutes + "m " + seconds + "s ";
 
   document.getElementById("rotatingTriangle").style.opacity = percentDone
+  document.getElementById("innerCircle").style.opacity = percentDoneCircles
+  document.getElementById("outerCircle").style.opacity = percentDoneCircles
 
   // If the count down is finished, write some text 
   if (distance < 0) {
