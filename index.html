@@ -18,7 +18,7 @@
 <body>
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; width: 100%; margin: auto; position: absolute; z-index: 20; ">
       <p style="text-align:center;font-size: 64px;z-index: 20; position: relative; margin-bottom: 0%;" id="partText">Part II of present coming soon</p>
-      <p style="text-align: center; font-size: 12px; z-index: 20; position: relative; display: none; margin-bottom: auto;" id="youMightHaveToWaitText">(You might have to wait a second or two)</p>
+      <p style="text-align: center; font-size: 12px; z-index: 20; position: relative; display: none; margin-bottom: 2%;" id="youMightHaveToWaitText">(You might have to wait a second or two)</p>
       <p style="text-align: center; font-size: 64px; z-index: 20; position: relative; display: none; margin-bottom: 0%;" id="part3text">Part III of present coming soon c:</p>
       <!-- Display the countdown timer in an element -->
       <p style="text-align:center;font-size: 64px;z-index: 20; position: relative;" id="countdownElement">___</p>
@@ -93,7 +93,15 @@ var x = setInterval(function() {
       node.insertAdjacentHTML("afterend", '<iframe src="https://open.spotify.com/embed/playlist/4USOctbgT9PPTAfQNG2uKs"width="300" height="380" frameborder="0" allowtransparency="true"allow="encrypted-media"></iframe>')
     }
   } else {
-    document.getElementById("partText").innerHTML = "<3"
+    if (!playlistLoaded) {
+      playlistLoaded = true
+      var node = document.getElementById("youMightHaveToWaitText");
+      node.insertAdjacentHTML("afterend", '<iframe src="https://open.spotify.com/embed/playlist/4USOctbgT9PPTAfQNG2uKs"width="300" height="380" frameborder="0" allowtransparency="true"allow="encrypted-media"></iframe>')
+    }
+    document.getElementById("partText").innerHTML = "Part III should be nearly there!"
+    document.getElementById("youMightHaveToWaitText").innerHTML = "(You might have to wait a bit more)"
+    document.getElementById("youMightHaveToWaitText").style.display = "block"
+    document.getElementById("part3text").style.display = "none"
     document.getElementById("countdownElement").innerHTML = " ";
     // Break only after both countdowns finish 
     clearInterval(x);
